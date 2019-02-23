@@ -1,49 +1,91 @@
 <!DOCTYPE html>
 <script src="https://d3js.org/d3.v4.min.js"></script>
-<script src="https://unpkg.com/topojson-client@3"></script>
 
 <head>
-  <link rel="stylesheet" href="style.css">
+  <link rel = "stylesheet" href = "reset.css">
+  <link rel = "stylesheet" href = "style.css">
 </head>
 
 <html><body>
 
-  <a href = "references.html"><button>References</button></a>
+  <a href = "about.html"><button style = "font-size : 14px">About the Visualization</button></a>
 
   <!--Title and Question-->
-  <h1>2020 Democratic Primary Google Trends</h1>
-  <h2>Inspiration</h2>
-  <p>In his book, Everybody Lies: Big Data, New Data, and What the Internet Can
-    Tell Us About Who We Really Are, Economist Seth Stephens-Davidowitz tells us
-    that in the 2016 presidential election, a state’s “search history” for a
-    given candidate was a better predictor for a candidate’s success than the
-    traditional methods of polling. We think we can leverage this to make a
-    unique prediction tool for the 2020 Democratic Primary.</p>
-  <p>Polls are historically unreliable in predicting the outcome of an
-    election. In the 2016 Presidential Election, every major poll showed
-    Hillary Clinton winning the election by a wide margin on the day of the
-    election. As we all know, this isn’t quite how things panned out. What if
-    we could leverage the public’s everyday search activity to predict an
-    election?</p>
+  <h2>Chicago Homicide Trends</h1>
+  <h3>What trends can be seen from 2001 to 2017 in the number and
+  locations of reported homicides in Chicago, Illinois, USA?</h2>
 
   <div class = "move">
-    <h3>Views</h3>
+    <h3>Scenes</h3>
   </div>
 
   <!--Create pagination to navigate Scenes 1 through 5-->
   <div class = "pagination">
-    <a href = "#" id = "step1" class = "step-link active">Chloropleth Map</a>
-    <a href = "#" id = "step2" class = "step-link">Cartogram Map</a>
+    <a href = "#" id = "step1" class = "step-link active">1</a>
+    <a href = "#" id = "step2" class = "step-link">2</a>
+    <a href = "#" id = "step3" class = "step-link">3</a>
+    <a href = "#" id = "step4" class = "step-link">4</a>
+    <a href = "#" id = "step5" class = "step-link">5</a>
   </div>
 
   <br>
+  <div class = "move2">
+    <h3>Overview of Reported Homicides</h3>
+  </div>
 
   <!--Container for visualization-->
   <div id = "vis-container">
+    <div id = "annotation-steps">
+      <!--Scene 1-->
+      <div class="annotation-step" id="step1-annotation" style="display:block;">
+        <div class="annotation" id="step1-left-annotation" >
+          <h4>Drop in Numbers</h4>
+          <p>From 2002-2004 there appeared to be a drop in annual homicide reports from ~650 to ~450 that lasted over a decade.</p>
+        </div>
+        <div class="annotation" id="step1-right-annotation" >
+          <h4>Rise in Numbers</h4>
+          <p>In 2016, this total spiked to almost 800 homicides, a rise of about 75%.</p>
+        </div>
+      </div>
+
+      <!--Scene 2-->
+      <div class="annotation-step" id="step2-annotation" style="display:block;">
+        <div class="annotation" id="step2-center-annotation" >
+          <h4>Street Violence</h4>
+          <p>While homicides in the street did not have a visual drop from 2002-2004, they appear to have the largest rise in 2016.</p>
+          <p>In scenes 3 and 4, you will see that residence and auto homicides rose in 2016 but not higher than 2001-2003 numbers.</p>
+          <p>Street homicides had the biggest impact on the 2016 rise while other types of homicides
+            had the biggest impact on the 2002-2004 fall.</p>
+        </div>
+      </div> 
+
+      <!--Scene 5-->
+      <div class="annotation-step" id="step5-annotation" style="display:block;">
+        <div class="annotation" id="step5-center-annotation" >
+          <h4>What do you see?</h4>
+          <p>Investigate trends using the radio buttons to your right to zoom and stack reports.</p>
+          <p>Hover over the bars in the chart to obtain exact numbers of homicides for each location type and year.</p>
+        </div>
+      </div>
+    </div>
+
+    <!--Create radio buttons to change parameters in Scene 5-->
+    <div id = "div1" class = "hide">
+      <form>
+        <label><input type="radio" name = "mode" value="zoom6">Other</label>
+        <label><input type="radio" name = "mode" value="zoom5">Parking/Vacant Lot</label>
+        <label><input type="radio" name = "mode" value="zoom4">Retail Establishment</label>
+        <label><input type="radio" name = "mode" value="zoom3">Alley</label>
+        <label><input type="radio" name = "mode" value="zoom2">Auto</label>
+        <label><input type="radio" name = "mode" value="zoom1">Residence</label>
+        <label><input type="radio" name = "mode" value="grouped">Street</label>
+        <label><input type="radio" name = "mode" id = "radio1" value="stacked" checked>Stacked</label>
+      </form>
+    </div>
+
     <div id = "vis-canvas">
-      <svg id = "bar" width = "1200" height = "600" fill = "none"
-           stroke = "#000" stroke-linejoin = "round"
-           stroke-linecap = "round"></svg>
+      <svg id = "bar" width = "1000" height = "600"></svg>
+      <!--D3 and JavaScript for Bar Chart-->
       <script src = "d3.js"></script>
     </div>
   </div>
