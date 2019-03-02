@@ -52,10 +52,10 @@ def all_queries(states=STATES):
 		    if row[query] > 0:
 			q_string = """
 			   INSERT INTO query
-			   (phrase, cid, state_code, amount, qdate)
+			   (qid, phrase, cid, state_code, amount, qdate)
 			   VALUES
-			   ("{}", {}, "{}", {}, "{}");
-			""".format(query, CAND_ID[cand], state, row[query], index)
+			   ({}, "{}", {}, "{}", {}, "{}");
+			""".format(PRIMARY_QID, query, CAND_ID[cand], state, row[query], index)
 			print("attempting query:\n{}".format(q_string))
 			try:
 			   cursor.execute(q_string)
