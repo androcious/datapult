@@ -79,7 +79,7 @@ label {
 }
 
 /* Style the topnav links */
-.footer b {
+.footer a {
   float: left;
   display: block;
   color: #f2f2f2;
@@ -90,7 +90,7 @@ label {
 }
 
 /* Change color on hover */
-.footer b:hover {
+.footer a:hover {
   background-color: #ddd;
   color: black;
 }
@@ -112,7 +112,7 @@ label {
 
 /* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
 @media screen and (max-width: 400px) {
-  .footer b {
+  .footer a {
     float: none;
     width: 100%;
   }
