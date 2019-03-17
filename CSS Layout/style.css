@@ -54,6 +54,10 @@ body {
   width: 15%;
 }
 
+.column.left2 {
+  width: 40%;
+}
+
 label {
   display: block;
 }
@@ -61,6 +65,11 @@ label {
 /* Middle column */
 .column.right {
   width: 85%;
+  text-align: center;
+}
+
+.column.right2 {
+  width: 60%;
   text-align: center;
 }
 
@@ -95,9 +104,15 @@ label {
   color: black;
 }
 
-/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
   .column.left, .column.right {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .column.left2, .column.right2 {
     width: 100%;
   }
 }
