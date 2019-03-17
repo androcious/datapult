@@ -51,7 +51,7 @@ body {
 
 /* Left and right column */
 .column.left {
-  width: 10%;
+  width: 15%;
 }
 
 label {
@@ -60,7 +60,7 @@ label {
 
 /* Middle column */
 .column.right {
-  width: 90%;
+  width: 85%;
   text-align: center;
 }
 
