@@ -60,7 +60,7 @@ ROW_FORMAT = DYNAMIC;
 DROP TABLE IF EXISTS `query` ;
 
 CREATE TABLE `query` (
-  `qid` INT NOT NULL,
+  `qid` INT NOT NULL AUTO_INCREMENT,
   `phrase` VARCHAR(255) NOT NULL,
   `cid` INT(4) NOT NULL COMMENT 'contains candidate_id which selected to be winner of the search phrase',
   `state_code` VARCHAR(2) NOT NULL COMMENT 'contains the two-letter state code',
