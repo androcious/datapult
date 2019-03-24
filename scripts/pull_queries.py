@@ -1,4 +1,5 @@
 import time
+import pdb
 import sys
 from constants import *
 
@@ -9,18 +10,6 @@ from pytrends.request import TrendReq
 pytrends = TrendReq(hl='en-US', tz=360)
 
 PRIMARY_QID = 0
-CAND_ID = {
-    'kamala harris': 0,
-    'pete buttigieg': 1,
-    'bernie sanders': 2,
-    'elizabeth warren': 3,
-    'cory booker': 4,
-    'kirsten gillibrand': 5,
-    'amy klobuchar': 6,
-    'jay inslee': 7,
-    'julian castro': 8,
-}
-
 mariadb_connection = mariadb.connect(user='root', password='datapult49', database='gtep_test')
 cursor = mariadb_connection.cursor()
 
@@ -42,9 +31,7 @@ def get_states():
     # Parse and transform into list.
     state_list = []
     for tup in result:
-        print(type(tup))
         state_list.append("{}".format(tup[0]))
-    print("ALL STATES IN DATABASE:\n{}".format(state_list))
     return state_list
 
 def get_candidates():
@@ -95,8 +82,9 @@ def all_queries_in_state(state, cand_list):
     For a given state and candidate list, populate the query table with
     all queries related to each candidate in that state.
     """
+    global PRIMARY_QID
     for cand in cand_list:
-        queries = get_related_queries(cand[0], state)
+        queries = get_related_queries(cand[0], state)[:5]
         pytrends.build_payload(queries, cat=0, timeframe='today 3-m', geo='US-{}'.format(state), gprop='')
         data = pytrends.interest_over_time()
         for date, row in data.iterrows():
@@ -111,6 +99,7 @@ def all_queries_in_state(state, cand_list):
 		    print("attempting insert:\n{}".format(q_string))
 		    try:
 		        cursor.execute(q_string)
+                        PRIMARY_QID = PRIMARY_QID + 1
 		    except Exception as e:
 		        print('ERROR: Error processing queries for {} in {}: {}'.format(cand, state, e))
 		        pass
