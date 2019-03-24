@@ -45,7 +45,21 @@
   </div>
   <div class="column right">
     <img src="Winners.png" width= 100% />
+    <p>Current Winner SQL Query:</p>
+    <p>SELECT first_name, last_name
+       FROM candidate
+       WHERE delegate_count = (SELECT MAX(delegate_count)
+                               FROM candidate)</p>
     <h4>Select a state to see more information.</h4>
+    <p>Map Data SQL Query:</p>
+    <p>In order to make chloropleth map need state and winner.</p>
+    <p>This will also give data for map popup when the state is selected.</p>
+    <p>SELECT state_code, cid, first_name, last_name, type_of_primary,
+       delegates_at_play, population
+       FROM state
+       LEFT JOIN (SELECT cid, first_name, last_name
+                  FROM candidate) c
+       ON state.current_winner = c.cid;</p>
     <img src="MapPlaceholder.png" width="100%"/>
   </div>
 </div>
