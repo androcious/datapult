@@ -1,0 +1,51 @@
+code,state,category,total
+AL,Alabama,state,13
+AK,Alaska,state,15
+AZ,Arizona,state,10
+AR,Arkansas,state,9
+CA,California,state,35
+CO,Colorado,state,3
+CT,Connecticut,state,14
+DE,Delaware,state,2
+FL,Florida,state,37
+GA,Georgia,state,28
+HI,Hawaii,state,4
+ID,Idaho,state,20
+IL,Illinois,state,87
+IN,Indiana,state,50
+IA,Iowa,state,11
+KS,Kansas,state,45
+KY,Kentucky,state,18
+LA,Louisiana,state,19
+ME,Maine,state,27
+MD,Maryland,state,6
+MA,Massachusetts,state,24
+MI,Michigan,state,31
+MN,Minnesota,state,71
+MS,Mississippi,state,21
+MO,Missouri,state,39
+MT,Montana,state,17
+NE,Nebraska,state,7
+NV,Nevada,state,13
+NH,New Hampshire,state,7
+NJ,New Jersey,state,50
+NM,New Mexico,state,25
+NY,New York,state,148
+NC,North Carolina,state,38
+ND,North Dakota,state,37
+OH,Ohio,state,39
+OK,Oklahoma,state,16
+OR,Oregon,state,17
+PA,Pennsylvania,state,19
+RI,Rhode Island,state,3
+SC,South Carolina,state,9
+SD,South Dakota,state,3
+TN,Tennessee,state,15
+TX,Texas,state,66
+UT,Utah,state,45
+VT,Vermont,state,18
+VA,Virginia,state,11
+WA,Washington,state,38
+WV,West Virginia,state,13
+WI,Wisconsin,state,30
+WY,Wyoming,state,34

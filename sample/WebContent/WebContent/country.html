@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="header">
+  <h1>2020 Democratic Primary Google Trends</h1>
+</div>
+
+<div class="topnav">
+  <a href="index.html">Home</a>
+  <a href="howto.html">How To</a>
+  <a href="inspiration.html">Inspiration</a>
+  <a href="candidates.html">Candidate Summary</a>
+  <a href="country.html">Country Summary</a>
+  <a href="investigate.html">Investigate</a>
+</div>
+
+<div class="row">
+  <h3>Country Table</h3>
+  <p>Country Table SQL Query:</p>
+  <p>SELECT name, type_of_primary, delegates_at_play, population,
+            first_name, last_name
+     FROM state
+     LEFT JOIN (SELECT cid, first_name, last_name
+                FROM candidate) c
+     ON state.current_winner = c.cid;</p>
+  <img src="images/CountryTable.png" width = "100%"/>
+</div>
+
+<div class="footer">
+  <a href="references.html">References</a>
+  <a href="contactus.html">Contact Us</a>
+</div>
+
+</body>
+</html>
