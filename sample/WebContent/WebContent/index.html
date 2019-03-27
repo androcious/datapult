@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>Google 2020 Primary Election Predictor:  CS411 project Application - 2019 Team Datapult</title>
+</head>
+<body bgcolor=white>
+
+<table border="0">
+<tr>
+<td>
+<img src="images/democrat.jpg" height=200 width = 300>
+</td>
+<td>
+<h1>Google 2020 Primary Election Predictor: </h1>
+<p>This Project is brought to you by team Datapult
+</td>
+
+
+
+</tr>
+<tr></tr>
+<tr><td><font color="blue"><b>Current Date:</b></font></td><td><p id="date"></p></td></tr>
+</table>
+
+
+
+<script type="text/javascript">
+        n =  new Date();
+y = n.getFullYear();
+m = n.getMonth() + 1;
+d = n.getDate();
+document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
+    </script>
+    
+    
+<p>To prove that they work, you can execute either of the following links:
+<ul>
+<li>To a <a href="candidateList.jsp">List of Candidates followed by the Datapult Team</a>.
+<li>To a <a href="index.jsp">Check Current Winner</a>.
+<li>To a <a href="map.jsp">List Chlorpleth Map page</a>.
+<li>To a <a href="state.jsp">List State Data JSP page</a>.
+<li>To a <a href="query.jsp">List Query Data JSP page</a>.
+</ul>
+<img src="images/DemocratRun2020.png" height="200" width="600"><hr>
+
+<center><embed type="text/html" src="footer.html"></center>
+</body>
+</html>
