@@ -17,46 +17,47 @@
 </td>
 <td>
 <h1>Hello! Welcome to the CS411 class team DATAPULT's page</h1>
-This is the output of a JSP page that prints data from our database hosted on our designated VM
+
 </td>
 </tr>
 </table>
 <br>
 <font color="red">
-<%= new String("Hello! The below data shows what resides in our State table") %>
+<%= new String("Hello! The below data shows the current status across the country!!") %>
 
 </font>
 <br><br>
 
 <form method="post">
 
-
 <%
 
 try
 {
 Class.forName(Constants.MARIA_DRIVER);
-String url=Constants.DBURL;
-String username=Constants.USERNAME;
-String password=Constants.PWD;
-String query="select * from state";
-Connection conn=DriverManager.getConnection(url,username,password);
+
+String query="SELECT name, type_of_primary, delegates_at_play, population, first_name, last_name FROM state LEFT JOIN (SELECT cid, first_name, last_name FROM candidate) c ON state.current_winner = c.cid";
+Connection conn=DriverManager.getConnection(Constants.DBURL,Constants.USERNAME,Constants.PWD);
 Statement stmt=conn.createStatement();
 ResultSet rs=stmt.executeQuery(query);
 ResultSetMetaData rsmd = rs.getMetaData();
 int columnCount = rsmd.getColumnCount();
+int rowCount=0;
 %>
+
+
+
 <table border="2">
 <tr>
   <%for(int h=1;h<=columnCount;h++) {%>  
-    <td><%=rsmd.getColumnName(h) %></td>
+    <td><b></b><font color="blue"><%=rsmd.getColumnName(h).toUpperCase() %></font></b></td>
   <%} %>
 
 </tr>
 <% 
 while(rs.next())
 {
-
+rowCount++;
 %>
 
 
@@ -72,6 +73,8 @@ while(rs.next())
 }
 %>
     </table>
+    
+<font color="green">Number of Rows Currently in Table: <%=rowCount %></font>
     <%
     rs.close();
     stmt.close();
@@ -86,7 +89,8 @@ catch(Exception e)
 
 
 %>
+<center><embed type="text/html" src="footer.html"></center>
 </form>
-<embed type="text/html" src="footer.html">
+ 
 </body>
 </html>
