@@ -77,7 +77,7 @@ def get_related_queries(cand_name, state):
 
     return queries
 
-def all_queries_in_state(state, cand_list):
+def all_queries_in_state(state, cand_list, date_begin=None, date_end=None):
     """
     For a given state and candidate list, populate the query table with
     all queries related to each candidate in that state.
@@ -85,7 +85,14 @@ def all_queries_in_state(state, cand_list):
     global PRIMARY_QID
     for cand in cand_list:
         queries = get_related_queries(cand[0], state)[:5]
-        pytrends.build_payload(queries, cat=0, timeframe='today 3-m', geo='US-{}'.format(state), gprop='')
+
+        # default if no range provided: lookback 1 day
+        if date_begin is None:
+	    pytrends.build_payload(queries, cat=0, timeframe='now 1-d', geo='US-{}'.format(state), gprop='')
+        # get data from throughout range
+        else:
+	    pytrends.build_payload(queries, cat=0, timeframe='{} {}'.format(date_begin, date_end), geo='US-{}'.format(state), gprop='')
+
         data = pytrends.interest_over_time()
         for date, row in data.iterrows():
 	    for query in queries:
@@ -104,12 +111,12 @@ def all_queries_in_state(state, cand_list):
 		        print('ERROR: Error processing queries for {} in {}: {}'.format(cand, state, e))
 		        pass
 
-def all_queries():
+def all_queries(date_begin=None, date_end=None):
     states = get_states()
     cand_list = get_candidates()
     for state in states:
 	try:
-	    all_queries_in_state(state, cand_list)
+	    all_queries_in_state(state, cand_list, lookback, date_begin, date_end)
         except Exception as e:
 	    print('ERROR: Error handling queries for {}: {}'.format(state, e))
 	    pass
@@ -118,4 +125,13 @@ def all_queries():
 
 
 if __name__ == "__main__":
-    all_queries()
+    date_begin = None
+    date_end = None
+    try:
+        date_begin = sys.argv[1]
+        date_end = sys.argv[2]
+    except:
+        # no dates passed in
+        pass
+
+    all_queries(date_begin, date_end)
