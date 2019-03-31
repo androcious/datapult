@@ -13,6 +13,16 @@ pytrends = TrendReq(hl='en-US', tz=360)
 mariadb_connection = mariadb.connect(user='root', password='datapult49', database='gtep_test')
 cursor = mariadb_connection.cursor()
 
+def convert_continental(states):
+    result_states = []
+    for state in states:
+        if state == 'AS' or state == 'GU' or state == 'VI' or state == 'PR':
+            result_states.append(state)
+        else:
+            result_states.append('US-' + state)
+    return result_states
+
+
 def get_states():
     """
     Pulls state info from the state table.
@@ -22,16 +32,17 @@ def get_states():
 	SELECT state_code FROM state;
     """
     try:
-	cursor.execute(q_string)
+        cursor.execute(q_string)
         result = cursor.fetchall()
     except:
-	print("ERROR: Could not fetch state data")
-	sys.exit()
+        print("ERROR: Could not fetch state data")
+        sys.exit()
 
     # Parse and transform into list.
     state_list = []
     for tup in result:
         state_list.append("{}".format(tup[0]))
+    state_list = convert_continental(state_list)
     return state_list
 
 def cand_to_map(cand_list):
