@@ -1,4 +1,5 @@
 import datetime
+import time
 import pdb
 import sys
 
@@ -29,11 +30,14 @@ def insert_data(cand, score, cid, state, date):
 ### Fill the db with trend data from date passed in to today
 try:
     date_start_str = sys.argv[1]
-    date_start = datetime.datetime.strptime(date_start_str, "%Y-%m-%d")
+    if date_start_str == "today":
+        date_start = datetime.datetime.today()
+    else:
+        date_start = datetime.datetime.strptime(date_start_str, "%Y-%m-%d")
 except Exception as e:
     print("Error parsing date: {}".format(e))
 
-while date_start < today:
+while date_start <= today:
     print("Computing trend data for {}...\n\n".format(date_start))
     cand_list = qry.get_candidates()
     states = qry.get_states()
@@ -41,7 +45,10 @@ while date_start < today:
     for state in states:
         averages = trends.normalized_averages(cand_list, state, date_start)
         for cand, score in averages.iteritems():
-            insert_data(cand, score, cand_map[cand], state, date_start)
+            try:
+                insert_data(cand, score, cand_map[cand], state, date_start)
+            except KeyError:
+                pass
         mariadb_connection.commit()
+        time.sleep(60)
     date_start = date_start + datetime.timedelta(days=1)
-    time.sleep(60)

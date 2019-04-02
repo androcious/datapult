@@ -16,7 +16,7 @@ cursor = mariadb_connection.cursor()
 def convert_continental(states):
     result_states = []
     for state in states:
-        if state == 'AS' or state == 'GU' or state == 'VI' or state == 'PR':
+        if state == 'AS' or state == 'GU' or state == 'VI' or state == 'PR' or state == 'MP':
             result_states.append(state)
         else:
             result_states.append('US-' + state)

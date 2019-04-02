@@ -361,3 +361,6 @@ def update_all():
     print('Updated average number of delegates per candidate over 7 days.')
     
     print('Complete.')
+
+if __name__ == "__main__":
+    update_all()
