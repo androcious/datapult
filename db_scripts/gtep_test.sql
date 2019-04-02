@@ -29,6 +29,9 @@ CREATE TABLE `candidate` (
   `middle_name` VARCHAR(45) NULL DEFAULT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   `delegate_count` INT(11) NULL DEFAULT NULL,
+  `nickname` varchar(45) DEFAULT NULL,
+  `img` varchar(255) DEFAULT NULL,
+  `color` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`cid`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -41,13 +44,15 @@ ROW_FORMAT = DYNAMIC;
 DROP TABLE IF EXISTS `state` ;
 
 CREATE TABLE `state` (
-  `state_code` VARCHAR(2) NOT NULL COMMENT 'Two-letter unique state code',
-  `name` VARCHAR(255) NOT NULL,
-  `type_of_primary` VARCHAR(45) NULL DEFAULT NULL,
-  `delegates_at_play` INT(11) NULL DEFAULT NULL,
-  `population` INT(8) NULL DEFAULT NULL,
-  `current_winner` INT(4) NULL DEFAULT NULL,
-  PRIMARY KEY (`state_code`))
+  `state_code` varchar(2) NOT NULL COMMENT 'Two-letter unique state code',
+  `name` varchar(255) NOT NULL,
+  `type_of_primary` varchar(45) DEFAULT NULL,
+  `delegates_at_play` int(11) DEFAULT NULL,
+  `population` int(8) DEFAULT NULL,
+  `current_winner` int(4) DEFAULT NULL,
+  `locked` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`state_code`)
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 ROW_FORMAT = DYNAMIC;

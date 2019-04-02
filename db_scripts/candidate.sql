@@ -39,7 +39,22 @@ CREATE TABLE `candidate` (
 
 LOCK TABLES `candidate` WRITE;
 /*!40000 ALTER TABLE `candidate` DISABLE KEYS */;
-INSERT INTO `candidate` VALUES (1,'kamala','devi','harris',64,'the female barack obama'),(2,'bernie',NULL,'sanders',356,'bern'),(3,'john','kevin','delaney',88,NULL),(4,'andrew',NULL,'yang',371,NULL),(5,'julian',NULL,'castro',91,NULL),(6,'cory','anthony','booker',342,'Spartacus'),(7,'tulsi',NULL,'gabbard',437,NULL),(8,'elizabeth','ann','warren',156,NULL),(9,'amy','jean','klobuchar',470,NULL),(10,'jay','robert','inslee',383,NULL),(11,'john','wright','hickenlooper',4,'Hick'),(12,'beto','francis','o\'rourke',250,NULL),(13,'pete','paul montgomery','buttigieg',20,NULL),(14,'kirsten','elizabeth','gillibrand',30,NULL),(15,'marianne','deborah','williamson',0,NULL);
+INSERT INTO `candidate` 
+VALUES (1,'kamala','devi','harris',64,'the female barack obama'),
+(2,'bernie',NULL,'sanders',356,'bern'),
+(3,'john','kevin','delaney',88,NULL),
+(4,'andrew',NULL,'yang',371,NULL),
+(5,'julian',NULL,'castro',91,NULL),
+(6,'cory','anthony','booker',342,'Spartacus'),
+(7,'tulsi',NULL,'gabbard',437,NULL),
+(8,'elizabeth','ann','warren',156,NULL),
+(9,'amy','jean','klobuchar',470,NULL),
+(10,'jay','robert','inslee',383,NULL),
+(11,'john','wright','hickenlooper',4,'Hick'),
+(12,'beto','francis','o\'rourke',250,NULL),
+(13,'pete','paul montgomery','buttigieg',20,NULL),
+(14,'kirsten','elizabeth','gillibrand',30,NULL),
+(15,'marianne','deborah','williamson',0,NULL);
 /*!40000 ALTER TABLE `candidate` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
