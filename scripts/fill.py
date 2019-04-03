@@ -31,7 +31,7 @@ def insert_data(cand, score, cid, state, date):
 try:
     date_start_str = sys.argv[1]
     if date_start_str == "today":
-        date_start = datetime.datetime.today()
+        date_start = today
     else:
         date_start = datetime.datetime.strptime(date_start_str, "%Y-%m-%d")
 except Exception as e:

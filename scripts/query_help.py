@@ -13,6 +13,13 @@ pytrends = TrendReq(hl='en-US', tz=360)
 mariadb_connection = mariadb.connect(user='root', password='datapult49', database='gtep_test')
 cursor = mariadb_connection.cursor()
 
+
+def trim_state(state):
+    if state == 'AS' or state == 'GU' or state == 'VI' or state == 'PR' or state == 'MP':
+        return state
+    else:
+        return state[3:]
+
 def convert_continental(states):
     result_states = []
     for state in states:
