@@ -9,7 +9,10 @@ pytrends = TrendReq(hl='en-US', tz=360)
 
 import query_help as qry
 
+REQUESTS = 0
+
 def compute_relative_trends(state, cand1, cand2, date):
+    global REQUESTS
     """
     Compute the relative average trend for the past week
     for candidates 1 and 2 in given state.
@@ -27,7 +30,10 @@ def compute_relative_trends(state, cand1, cand2, date):
     except Exception as e:
         print("Error building payload for {} and {} in {}: {}".format(cand1, cand2, state, e))
         raise(e)
-
+    REQUESTS = REQUESTS + 1
+    if REQUESTS == 1300:
+        print("WARNING: HIT THRESHOLD OF 1300 REQUESTS. SLEEPING FOR A WHILE")
+        time.sleep(14400)
     data = pytrends.interest_over_time()
     # average weekly trend computation
     cand1_tot = cand2_tot = 0

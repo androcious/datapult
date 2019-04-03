@@ -7,6 +7,7 @@ import trends
 import query_help as qry
 
 import mysql.connector as mariadb
+from trends import REQUESTS
 
 mariadb_connection = mariadb.connect(user='root', password='datapult49', database='gtep_test')
 cursor = mariadb_connection.cursor()
@@ -43,6 +44,7 @@ while date_start <= today:
     states = qry.get_states()
     cand_map = qry.cand_to_map(cand_list)
     for state in states:
+        print("current request load: {}".format(REQUESTS))
         averages = trends.normalized_averages(cand_list, state, date_start)
         for cand, score in averages.iteritems():
             try:
