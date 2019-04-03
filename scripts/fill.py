@@ -19,7 +19,7 @@ def insert_data(cand, score, cid, state, date):
         (qid, phrase, cid, state_code, amount, qdate)
         VALUES
         (NULL, "{}", {}, "{}", {}, "{}");
-        """.format(cand, cid, state, score, date.strftime("%Y-%m-%d"))
+        """.format(cand, cid, qry.trim_state(state), score, date.strftime("%Y-%m-%d"))
     print(q_string)
     try:
         cursor.execute(q_string)
