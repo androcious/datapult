@@ -31,6 +31,7 @@ def compute_relative_trends(state, cand1, cand2, date):
         print("Error building payload for {} and {} in {}: {}".format(cand1, cand2, state, e))
         raise(e)
     REQUESTS = REQUESTS + 1
+    print("Requests: {}".format(REQUESTS))
     if REQUESTS == 1300:
         print("WARNING: HIT THRESHOLD OF 1300 REQUESTS. SLEEPING FOR A WHILE")
         time.sleep(14400)
