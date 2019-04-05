@@ -34,7 +34,7 @@ def compute_relative_trends(state, cand1, cand2, date):
     print("Requests: {}".format(REQUESTS))
     if REQUESTS == 1300:
         print("WARNING: HIT THRESHOLD OF 1300 REQUESTS. SLEEPING FOR A WHILE")
-        time.sleep(14400)
+        time.sleep(20000)
         REQUESTS = 0
     data = pytrends.interest_over_time()
     # average weekly trend computation
