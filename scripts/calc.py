@@ -333,7 +333,7 @@ def update_all():
     # Determine date range to use from query table in database
     q_string = """
     SELECT max(qdate), min(qdate)
-    FROM query;
+    FROM query_dup;
     """
     try:
         cursor.execute(q_string)
