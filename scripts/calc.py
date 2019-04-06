@@ -14,7 +14,7 @@ def get_query(date):
     """
     q_string = """
 	SELECT cid, state_code, sum(amount), qdate
-    FROM query 
+    FROM query_dup
     WHERE qdate = '{}'
     GROUP BY cid, state_code, qdate;
     """.format(date)
@@ -97,7 +97,7 @@ def get_delegate_proportion(date):
     """
     Combines query and state tables and calculates delegate proportion to 
     Google searches.  
-    Returns state table with 
+    Returns a table of states and proportions. 
     """
     # Pull data from database
     queries = get_query(date)
@@ -127,6 +127,7 @@ def create_summary(date):
     
     # Join this proportion column back to queries table
     queries = pandas.merge(queries, delegates, on='state_code', how='left')
+    queries = queries[queries['amount'] > 0]
     queries['amount'].fillna(0, inplace=True)
     queries['delegates_won'] = queries['amount'] * queries['proportion']
     queries['delegates_won'] = queries['delegates_won'].astype(int)
@@ -348,16 +349,18 @@ def update_all():
     
     # Pull in all new summary data using commit_summary() on a loop.
     print('Please be patient, populating summary table from {} to {}.'.format(date2, date1))
+    
     for date in dates:
         pulldate = datetime.datetime.strftime(date, '%Y-%m-%d')
         commit_summary(pulldate)
-    print('Added summary table date for date range: {} to {}.'.format(date2, date1))
+    
+    print('Added summary table data for date range: {} to {}.'.format(date2, date1))
     
     # Update state and candidate table based on the most recent date from
     # query table in database.
-    update_state_winner(date1)
+    #update_state_winner(date1)
     print('Updated state table with candidate winner using 7 day average.')
-    update_candidate_delegates(date1)
+    #update_candidate_delegates(date1)
     print('Updated average number of delegates per candidate over 7 days.')
     
     print('Complete.')
