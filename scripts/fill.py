@@ -45,7 +45,16 @@ while date_start <= today:
     cand_map = qry.cand_to_map(cand_list)
     for state in states:
         print("current request load: {}".format(REQUESTS))
-        averages = trends.normalized_averages(cand_list, state, date_start)
+        while request_failed:
+            request_failed = False
+            try:
+                averages = trends.normalized_averages(cand_list, state, date_start)
+            except Exception as e:
+                print("Received error: {}".format(e))
+                print("Rate limit hit. Waiting an hour before trying again...")
+                request_failed = True
+                sleep(3600)
+
         for cand, score in averages.iteritems():
             try:
                 insert_data(cand, score, cand_map[cand], state, date_start)
