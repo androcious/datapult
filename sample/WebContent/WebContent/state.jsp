@@ -8,20 +8,26 @@
 <%@ page import="com.datapult.util.Constants"%>
 
 <title>Sample Application JSP Page</title>
+ <link rel="stylesheet" href="style.css">
 </head>
-<body bgcolor=white>
+<body>
 
-<table border="0">
-<tr>
-<td align=center>
-<img src="images/democrat.jpg" height=200 width = 300>
-</td>
-<td>
-<h1>Hello! Welcome to the CS411 class team DATAPULT's page</h1>
+<div class="header">
+  <h1>2020 Democratic Primary Google Trends</h1>
+  <h1>Hello! Welcome to the CS411 class team DATAPULT's page</h1>
 This is the output of a JSP page that prints data from our database hosted on our designated VM
-</td>
-</tr>
-</table>
+
+</div>
+
+<div class="topnav">
+  <a href="index.jsp">Home</a>
+  <a href="howto.html">How To</a>
+  <a href="inspiration.html">Inspiration</a>
+  <a href="candidateList.jsp">Candidate Summary</a>
+  <a href="country.html">Country Summary</a>
+  <a href="investigate.html">Investigate</a>
+</div>
+
 <br>
 <font color="red">
 <%= new String("Hello! The below data shows what resides in our State table") %>

@@ -1,4 +1,3 @@
-    <html> 
         <head>
 <!-- Plotly.js -->
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -6,15 +5,16 @@
         <body>
         <!-- Plotly chart will be drawn inside this DIV -->
         <div id="myDiv"></div>
-        
-        
         <script>
-     
+        <!-- Plotly.d3.csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv', function(err, rows){
+        	
+        	Plotly.d3.csv("sample.csv", function(err, rows){
+        	-->
         	
     
         		
         	
-        	Plotly.d3.csv("qryResult.csv", function(err, rows){
+        	Plotly.d3.csv("sampleCandidate.csv", function(err, rows){
        
         	function unpack(rows, key) {
                 return rows.map(function(row) { return row[key]; });
@@ -24,7 +24,7 @@
                     type: 'choropleth',
                     locationmode: 'USA-states',
                     locations: unpack(rows, 'code'),
-                    z: unpack(rows, 'delegates'),
+                    z: unpack(rows, 'total exports'),
                     text: unpack(rows, 'state'),
                     zmin: 0,
                     zmax: 35,
@@ -55,7 +55,7 @@
                 }
             };
             Plotly.plot(myDiv, data, layout, {showLink: false});
-        });
+        })
         </script>
+        <embed type="text/html" src="footer.html">
         </body>
-        </html>  
