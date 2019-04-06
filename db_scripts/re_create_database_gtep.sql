@@ -29,6 +29,9 @@ CREATE TABLE `candidate` (
   `middle_name` VARCHAR(45) NULL DEFAULT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   `delegate_count` INT(11) NULL DEFAULT NULL,
+  `nickname` varchar(45) DEFAULT NULL,
+  `img` varchar(255) DEFAULT NULL,
+  `color` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`cid`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -47,6 +50,7 @@ CREATE TABLE `state` (
   `delegates_at_play` INT(11) NULL DEFAULT NULL,
   `population` INT(8) NULL DEFAULT NULL,
   `current_winner` INT(4) NULL DEFAULT NULL,
+  `locked` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`state_code`),
   CONSTRAINT `current_winner`
     FOREIGN KEY (`current_winner`)

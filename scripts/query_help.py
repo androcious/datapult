@@ -1,4 +1,5 @@
 import time
+import datetime
 import pdb
 import sys
 from constants import *
@@ -9,9 +10,25 @@ import pytrends.request as requests
 from pytrends.request import TrendReq
 pytrends = TrendReq(hl='en-US', tz=360)
 
-PRIMARY_QID = 0
 mariadb_connection = mariadb.connect(user='root', password='datapult49', database='gtep_test')
 cursor = mariadb_connection.cursor()
+
+
+def trim_state(state):
+    if state == 'AS' or state == 'GU' or state == 'VI' or state == 'PR' or state == 'MP':
+        return state
+    else:
+        return state[3:]
+
+def convert_continental(states):
+    result_states = []
+    for state in states:
+        if state == 'AS' or state == 'GU' or state == 'VI' or state == 'PR' or state == 'MP':
+            result_states.append(state)
+        else:
+            result_states.append('US-' + state)
+    return result_states
+
 
 def get_states():
     """
@@ -22,17 +39,24 @@ def get_states():
 	SELECT state_code FROM state;
     """
     try:
-	cursor.execute(q_string)
+        cursor.execute(q_string)
         result = cursor.fetchall()
     except:
-	print("ERROR: Could not fetch state data")
-	sys.exit()
+        print("ERROR: Could not fetch state data")
+        sys.exit()
 
     # Parse and transform into list.
     state_list = []
     for tup in result:
         state_list.append("{}".format(tup[0]))
+    state_list = convert_continental(state_list)
     return state_list
+
+def cand_to_map(cand_list):
+    result = {}
+    for cand in cand_list:
+        result[cand[0]] = cand[1]
+    return result
 
 def get_candidates():
     """
@@ -53,7 +77,6 @@ def get_candidates():
     cand_list = []
     for tup in result:
         cand_list.append(["{} {}".format(tup[0], tup[1]), tup[2]])
-    print("ALL CANDIDATES IN DATABASE:\n{}".format(cand_list))
     return cand_list
 
 def get_related_queries(cand_name, state):
@@ -73,19 +96,33 @@ def get_related_queries(cand_name, state):
             if cand_name in q:
                 queries.append(q)
     except Exception as e:
-        print("ERROR: Error getting related queries for {} in {}: {}".format(cand_name, state, e))
+	print("No relevant misc queries for {} in {}, query list will just be {}.".format(cand_name, state, cand_name))
 
     return queries
 
-def all_queries_in_state(state, cand_list):
+def all_queries_in_state(state, cand_list, date_begin=None, date_end=None):
     """
     For a given state and candidate list, populate the query table with
     all queries related to each candidate in that state.
     """
-    global PRIMARY_QID
     for cand in cand_list:
         queries = get_related_queries(cand[0], state)[:5]
-        pytrends.build_payload(queries, cat=0, timeframe='today 3-m', geo='US-{}'.format(state), gprop='')
+
+        # default if no range provided: lookback 1 day
+        if date_begin is None:
+	    pytrends.build_payload(queries, cat=0, timeframe='now 1-d', geo='US-{}'.format(state), gprop='')
+        # get data from throughout range
+        else:
+	    try:
+		if state == 'AS' or state == 'GU' or state == 'VI' or state == 'PR':
+		    pytrends.build_payload(queries, cat=0, timeframe='{} {}'.format(date_begin, date_end), geo='{}'.format(state), gprop='')
+                else:
+		    pytrends.build_payload(queries, cat=0, timeframe='{} {}'.format(date_begin, date_end), geo='US-{}'.format(state), gprop='')
+	    except Exception as e:
+		print("error building payload: {}".format(e))
+		pdb.set_trace()
+		continue
+
         data = pytrends.interest_over_time()
         for date, row in data.iterrows():
 	    for query in queries:
@@ -94,28 +131,49 @@ def all_queries_in_state(state, cand_list):
 		        INSERT INTO query
 		        (qid, phrase, cid, state_code, amount, qdate)
 		        VALUES
-		        ({}, "{}", {}, "{}", {}, "{}");
-		    """.format(PRIMARY_QID, query, cand[1], state, row[query], date)
+		        (NULL, "{}", {}, "{}", {}, "{}");
+		    """.format(query, cand[1], state, row[query], date)
 		    print("attempting insert:\n{}".format(q_string))
 		    try:
 		        cursor.execute(q_string)
-                        PRIMARY_QID = PRIMARY_QID + 1
 		    except Exception as e:
 		        print('ERROR: Error processing queries for {} in {}: {}'.format(cand, state, e))
 		        pass
 
-def all_queries():
+def all_queries(date_begin=None, date_end=None):
     states = get_states()
     cand_list = get_candidates()
     for state in states:
 	try:
-	    all_queries_in_state(state, cand_list)
+	    all_queries_in_state(state, cand_list, date_begin, date_end)
         except Exception as e:
 	    print('ERROR: Error handling queries for {}: {}'.format(state, e))
 	    pass
 	mariadb_connection.commit()
 	time.sleep(60)
 
+def validate_date(date):
+    try:
+	datetime.datetime.strptime(date, '%Y-%m-%d')
+    except ValueError as e:
+	raise ValueError("Incorrect format, date should be YYYY-MM-DD")
 
 if __name__ == "__main__":
-    all_queries()
+    date_begin = None
+    date_end = None
+
+    try:
+        date_begin = sys.argv[1]
+        date_end = sys.argv[2]
+    except:
+        # no dates passed in
+        pass
+
+    try:
+        validate_date(date_begin)
+	validate_date(date_end)
+    except ValueError as e:
+	print("ERROR: {}".format(e))
+	sys.exit(1)
+
+    all_queries(date_begin, date_end)
