@@ -24,7 +24,7 @@ def get_query(date):
     except:
         print("ERROR: Could not fetch summary data")
         sys.exit()
-
+    
     # Parse and transform into list.
     summary_list = []
     for tup in result:
@@ -38,7 +38,6 @@ def get_query(date):
     queries['state_code'] = queries['state_code'].astype(str)
     queries['amount'] = queries['amount'].astype(int)
     queries['sdate'] = queries['sdate'].astype(str)
-    
     return queries
     
 def get_state_delegate():
@@ -177,6 +176,7 @@ def get_summary(date):
     update_state_winner() and update_candidate_delegates() functions.
     Returns a summary table.
     """
+    
     date2 = datetime.datetime.strptime(date, '%Y-%m-%d') - datetime.timedelta(days=7)
     date2 = datetime.datetime.strftime(date2, '%Y-%m-%d')
     
@@ -351,16 +351,20 @@ def update_all():
     print('Please be patient, populating summary table from {} to {}.'.format(date2, date1))
     
     for date in dates:
-        pulldate = datetime.datetime.strftime(date, '%Y-%m-%d')
-        commit_summary(pulldate)
+        try:
+            pulldate = datetime.datetime.strftime(date, '%Y-%m-%d')
+            commit_summary(pulldate)
+        except:
+            print("ERROR: Missing date {} from database.".format(pulldate))
+            pass
     
     print('Added summary table data for date range: {} to {}.'.format(date2, date1))
     
     # Update state and candidate table based on the most recent date from
     # query table in database.
-    #update_state_winner(date1)
+    update_state_winner(date1)
     print('Updated state table with candidate winner using 7 day average.')
-    #update_candidate_delegates(date1)
+    update_candidate_delegates(date1)
     print('Updated average number of delegates per candidate over 7 days.')
     
     print('Complete.')
