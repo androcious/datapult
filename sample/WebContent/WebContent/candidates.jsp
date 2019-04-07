@@ -19,6 +19,7 @@
 try
 {
 Class.forName("org.mariadb.jdbc.Driver");
+String query="SELECT first_name, last_name, delegate_count FROM candidate ORDER BY delegate_count";
 Connection conn=DriverManager.getConnection(Constants.DBURL,Constants.USERNAME,Constants.PWD);
 Statement stmt=conn.createStatement();
 ResultSet rs=stmt.executeQuery(query);
