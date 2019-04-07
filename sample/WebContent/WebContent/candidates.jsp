@@ -3,8 +3,8 @@
 
 <head>
   <title>Candidate Summary</title>
-  <link rel="stylesheet" type="text/css" href="./style.css">
-  <link rel="stylesheet" type="text/css" href="./style2.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="style2.css">
 </head>
 
 <%@ page import="java.sql.Connection" %>
@@ -19,7 +19,6 @@
 try
 {
 Class.forName("org.mariadb.jdbc.Driver");
-String query="SELECT first_name, last_name, delegate_count FROM candidate";
 Connection conn=DriverManager.getConnection(Constants.DBURL,Constants.USERNAME,Constants.PWD);
 Statement stmt=conn.createStatement();
 ResultSet rs=stmt.executeQuery(query);
@@ -48,7 +47,7 @@ int rowCount=0;
 <div class="row">
   <div class="column left2">
 
-    <h3>Candidate Summary</h3>
+    <h3 style="text-align: center">Candidate Summary</h3>
 
     <table>
       <thead>
@@ -81,11 +80,8 @@ int rowCount=0;
 
   <div class="column right2">
     <h3>Queries per Candidate Over Time</h3>
-    <p>Visualization</p>
-    <p>SQL Query: TBD</p>
-
     
-    <svg width="960" height="500"></svg>
+    <svg width="960" height="600"></svg>
     <script src="//d3js.org/d3.v4.min.js"></script>
     <script src="scripts/summary_chart.js"></script>
 

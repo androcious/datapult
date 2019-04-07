@@ -18,7 +18,7 @@ var line = d3.line()
     .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d.delegate_count); });
 
-d3.tsv("data/data1.tsv", type, function(error, data) {
+d3.tsv("data/candidate_summary.tsv", type, function(error, data) {
   if (error) throw error;
 
 var candidates = data.columns.slice(1).map(function(id) {
