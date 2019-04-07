@@ -6,7 +6,7 @@ import mysql.connector as mariadb
 mariadb_connection = mariadb.connect(user='root', password='datapult49', database='gtep_test')
 cursor = mariadb_connection.cursor()
 targetFile = "candidate_summary.tsv"
-targetPath = "/opt/tomcat/webapps/sample/data/"
+targetPath = "/opt/tomcat/webapps/trending2020/data/"
 
 def create_delegate_file():
     """
