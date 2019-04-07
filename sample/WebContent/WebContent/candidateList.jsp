@@ -6,21 +6,37 @@
 <%@ page import="java.sql.ResultSetMetaData" %>
 <%@ page import="java.sql.Statement" %>
 <%@ page import="com.datapult.util.Constants"%>
-<title>Sample Application JSP Page</title>
+
+<title>Team Datapult</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body bgcolor=white>
 
 <table border="0">
 <tr>
-<td align=center>
+<td>
 <img src="images/democrat.jpg" height=200 width = 300>
 </td>
 <td>
-<h1>Hello! Welcome to the CS411 class team DATAPULT's page</h1>
-This is the output of a JSP page that prints data from our database hosted on our designated VM
+<h1>2020 Democratic Primary Trends Predictor </h1>
+<p>This Project is brought to you by team Datapult
 </td>
+
+
+
 </tr>
+
+<tr></tr>
 </table>
+<div class="topnav">
+  <a href="index.jsp">Home</a>
+  <a href="howto.html">How To</a>
+  <a href="inspiration.html">Inspiration</a>
+  <a href="candidateList.jsp">Candidate Summary</a>
+  <a href="dataloader2.jsp">Country Summary</a>
+  <a href="investigate.html">Investigate</a>
+</div>
+<table>
 <br>
 <font color="red">
 <%= new String("Hello! Listed Below are the candidates that we are tracking currently") %>
@@ -87,10 +103,32 @@ catch(Exception e)
     e.printStackTrace();
     }
 
-
-
-
 %>
+<br><br>
+<font color="red">
+<%= new String("The below infographic once complete will display candidate trends over time based on historical search data points that we have been tracking as part of this project") %>
+
+</font>
+
+<div class="row">
+  <div class="column left2">
+    <h3>Candidate Summary</h3>
+    <p>Candidate Table SQL Query: </p>
+    <p>SELECT first_name, last_name, delegate_count
+       FROM candidate;</p>
+    <img src="images/CandidateTable.png" width="100%"/>
+  </div>
+  <div class="column right2">
+    <h3>Queries per Candidate Over Time</h3>
+    <p>Visualization</p>
+    <p>SQL Query: TBD</p>
+    <img src="images/CandidateLineGraph.png" width = "100%"/>
+  </div>
+</div>
+<div class="footer">
+  <a href="references.html">References</a>
+  <a href="contactus.html">Contact Us</a>
+</div>
 </form>
 <center><embed type="text/html" src="footer.html"></center>
 </body>
