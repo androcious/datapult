@@ -132,3 +132,8 @@ label {
     width: 100%;
   }
 }
+
+#myDiv {
+  width: 800px;
+  height: 500px;
+}

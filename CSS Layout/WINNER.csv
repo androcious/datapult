@@ -1,0 +1,57 @@
+code,state,category,cid,flname,typeprim,delegates,population
+AK,Alaska,state,13,pete buttigieg,Open,18,738432
+AL,Alabama,state,13,pete buttigieg,Closed,58,4858979
+AR,Arkansas,state,4,andrew yang,Open,37,2978204
+AS,American Samoa,state,null,null,N/A,10,55679
+AZ,Arizona,state,2,bernie sanders,Semi-closed,75,6828065
+CA,California,state,13,pete buttigieg,Top-two,476,39144818
+CO,Colorado,state,13,pete buttigieg,Semi-closed,77,5456574
+CT,Connecticut,state,13,pete buttigieg,Closed,65,3590886
+DC,DC,state,8,elizabeth warren,N/A,37,693972
+DE,Delaware,state,1,kamala harris,Closed,27,945934
+FL,Florida,state,13,pete buttigieg,Closed,238,20271272
+GA,Georgia,state,13,pete buttigieg,Open,112,10214860
+GU,Guam,state,1,kamala harris,N/A,11,164229
+HI,Hawaii,state,4,andrew yang,Open,31,1431603
+IA,Iowa,state,13,pete buttigieg,Open,54,3123899
+ID,Idaho,state,1,kamala harris,Semi-closed,24,1654930
+IL,Illinois,state,13,pete buttigieg,Open,190,12859995
+IN,Indiana,state,13,pete buttigieg,Open,79,6619680
+KS,Kansas,state,1,kamala harris,Semi-closed,37,2911641
+KY,Kentucky,state,13,pete buttigieg,Closed,53,4425092
+LA,Louisiana,state,2,bernie sanders,Top-two,61,4670724
+MA,Massachusetts,state,13,pete buttigieg,Semi-closed,121,6794422
+MD,Maryland,state,13,pete buttigieg,Closed,105,6006401
+ME,Maine,state,1,kamala harris,Closed,30,1329328
+MI,Michigan,state,13,pete buttigieg,Open,152,9922576
+MN,Minnesota,state,13,pete buttigieg,Open,94,5489594
+MO,Missouri,state,13,pete buttigieg,Open,88,6083672
+MP,Northern Mariana Islands,state,null,null,N/A,11,55144
+MS,Mississippi,state,4,andrew yang,Open,41,2992333
+MT,Montana,state,1,kamala harris,Open,22,1032949
+NC,North Carolina,state,13,pete buttigieg,Semi-closed,120,10042802
+ND,North Dakota,state,4,andrew yang,Open,19,756927
+NE,Nebraska,state,4,andrew yang,Semi-closed,31,1896190
+NH,New Hampshire,state,1,kamala harris,Semi-closed,32,1330608
+NJ,New Jersey,state,6,cory booker,Semi-closed,126,8958013
+NM,New Mexico,state,13,pete buttigieg,Closed,38,2085109
+NV,Nevada,state,4,andrew yang,Closed,39,2890845
+NY,New York,state,13,pete buttigieg,Closed,277,19795791
+OH,Ohio,state,13,pete buttigieg,Open,165,11613423
+OK,Oklahoma,state,1,kamala harris,Semi-closed,42,3911338
+OR,Oregon,state,1,kamala harris,Closed,64,4028977
+PA,Pennsylvania,state,13,pete buttigieg,Closed,181,12802503
+PR,Puerto Rico,state,13,pete buttigieg,N/A,58,3337000
+RI,Rhode Island,state,1,kamala harris,Semi-closed,31,1056298
+SC,South Carolina,state,1,kamala harris,Open,57,4896146
+SD,South Dakota,state,1,kamala harris,Semi-closed,20,858469
+TN,Tennessee,state,4,andrew yang,Open,77,6600299
+TX,Texas,state,13,pete buttigieg,Open,237,27469114
+UT,Utah,state,1,kamala harris,Semi-closed,28,2995919
+VA,Virginia,state,13,pete buttigieg,Open,112,8382993
+VI,Virgin Islands,state,null,null,N/A,11,107268
+VT,Vermont,state,1,kamala harris,Open,23,626042
+WA,Washington,state,13,pete buttigieg,Top-two,102,7170351
+WI,Wisconsin,state,13,pete buttigieg,Open,89,5771337
+WV,West Virginia,state,1,kamala harris,Semi-closed,35,1844128
+WY,Wyoming,state,1,kamala harris,Open,17,586107
