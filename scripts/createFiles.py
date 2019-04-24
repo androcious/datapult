@@ -1,11 +1,14 @@
 import sys
 import pandas
+import json
+from copy import deepcopy
 
 import mysql.connector as mariadb
 
 mariadb_connection = mariadb.connect(user='root', password='datapult49', database='gtep_test')
 cursor = mariadb_connection.cursor()
 targetFile = "candidate_summary.tsv"
+targetFile2 = "us-states2.js"
 targetPath = "/opt/tomcat/webapps/trending2020/data/"
 
 def create_delegate_file():
@@ -70,8 +73,93 @@ def create_delegate_file():
 
         print('--Updated ' + targetFile)
     
+def create_us_states_file():
+    """
+    Pulls state and candidate tables from database
+    Joins to map file and saves to local file structure as a js file
+    """
+    q_string = """
+    SELECT state_code, name, cid, first_name, last_name, type_of_primary, 
+        delegates_at_play, population 
+    FROM state
+    LEFT JOIN (SELECT cid, first_name, last_name 
+               FROM candidate) c 
+    ON state.current_winner = c.cid;
+    """
+    try:
+        cursor.execute(q_string)
+        result = cursor.fetchall()
+    except:
+        print("ERROR: Could not fetch state or candidate data")
+        sys.exit()
+
+    # Parse and transform into list.
+    state_list = []
+    for tup in result:
+        state_list.append([tup[1], tup[2], tup[3], tup[4], tup[5], tup[6],
+                           tup[7], tup[8]])
+  
+    # Convert to pandas dataframes
+    states = pandas.DataFrame.from_records(state_list)
+    
+    if states.empty:
+        print('State table was empty, not writing over us-states2.js')
+    else:
+        states.columns = ['code', 'state', 'cid', 'first_name', 'last_name', 
+                          'typeprim', 'delegates', 'population']
+        states['id'] = states['code'].astype(str)
+        states['state'] = states['state'].astype(str)
+        states['cid'] = states['cid'].astype(int)
+        states['first_name'] = states['first_name'].astype(str)
+        states['last_name'] = states['last_name'].astype(str)
+        states['typeprim'] = states['typeprim'].astype(str)
+        states['delegates'] = states['delegates'].astype(int)
+        states['population'] = states['population'].astype(int)
+
+        # Now I need to change the format to match what is needed
+        # Need columns as date and then name of each candidate
+        states['flname'] = states[['first_name', 'last_name']].apply(
+                lambda x: ' '.join(x), axis=1)
+        del states['first_name']
+        del states['last_name']
+        
+        # Capitalize Candidate Name
+        states.columns = map(str.title, states.columns)
+                
+        with open('us-states.json') as json_file:
+            a = json.load(json_file)
+
+        c = []
+
+        for fC, f in a.items():
+            if fC == 'features':
+                for i in range(len(f)):
+                    listItems = f[i]
+                    temp = deepcopy(listItems)
+                    for k, v in listItems.items():
+                        if k == 'id':
+                            temp2 = states[states.id == v]
+                            temp['cid'] = temp2['cid'].iloc[0]
+                            temp['state'] = temp2['state'].iloc[0]
+                            temp['flname'] = temp2['flname'].iloc[0]
+                            temp['typeprim'] = temp2['typeprim'].iloc[0]
+                            temp['delegates'] = int(temp2['delegates'].iloc[0])
+                            temp['population'] = int(temp2['population'].iloc[0])
+                            c.append(temp)
+        
+        a['features'] = c
+        
+        myString = 'var statesData = ' + json.dumps(a)
+        
+        file = open(targetPath+targetFile2, 'w')
+        file.write(myString)
+        file.close()
+
+        print('--Updated ' + targetFile)    
+    
 def write_all():
     create_delegate_file()
+    create_us_states_file()
 
 if __name__ == "__main__":
     write_all()
