@@ -73,6 +73,41 @@ def create_delegate_file():
         delegateLine.to_csv(targetPath+targetFile, sep='\t', encoding='utf-8', index=False)
 
         print('--Updated ' + targetPath+targetFile)
+
+def get_candidate_colors():
+    """
+    Pulls colors from candidate tables from database
+    Returns a data frame with colors and candidate ids
+    """ 
+    q_string = """
+    SELECT cid, color 
+    FROM candidate;
+    """
+    try:
+        cursor.execute(q_string)
+        result = cursor.fetchall()
+    except:
+        print("ERROR: Could not fetch candidate color data")
+        sys.exit()
+
+    # Parse and transform into list.
+    color_list = []
+    for tup in result:
+        color_list.append([tup[0], tup[1]])
+  
+    # Convert to pandas dataframes
+    colors = pandas.DataFrame.from_records(color_list)
+    
+    if colors.empty:
+        print('Color table was empty')
+    else:
+        colors.columns = ['cid', 'color']
+        colors['cid'] = colors['cid'].astype(int)
+        colors = colors.sort_values(by='cid', ascending=False)
+        colors['cid'] = colors['cid'].astype(str)
+        colors['color'] = colors['color'].astype(str)
+    
+    return colors
     
 def create_us_states_file():
     """
@@ -150,8 +185,25 @@ def create_us_states_file():
         
         a['features'] = c
          
-        myString = 'var statesData = ' + json.dumps(a)
-           
+        colors = get_candidate_colors()
+        
+        first = colors['cid'].iloc[0]
+        last = colors['cid'].iloc[len(colors.index)-1]
+        
+        for index, row in colors.iterrows():
+            if row['cid'] == first:
+                colorString = ("function getColor(d) { \n \t return " 
+                               "d > " + row['cid'] + " ? " 
+                               "'" + row['color'] + "' :") 
+            elif row['cid'] == last:
+                colorString = colorString + "\n\t\t\t" + "'" + row['color'] + "';\n}"
+            else:
+                newLine = ("\n\t\t" + "d > " + row['cid'] + " ? " 
+                               "'" + row['color'] + "' :")
+                colorString = colorString + newLine
+                
+        myString = 'var statesData = ' + json.dumps(a) + "\n\n" + colorString
+        
         file = open(targetPath2+targetFile2, 'w')
         file.write(myString)
         file.close()
