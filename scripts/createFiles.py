@@ -193,12 +193,12 @@ def create_us_states_file():
         for index, row in colors.iterrows():
             if row['cid'] == first:
                 colorString = ("function getColor(d) { \n \t return " 
-                               "d > " + row['cid'] + " ? " 
+                               "d >= " + row['cid'] + " ? " 
                                "'" + row['color'] + "' :") 
             elif row['cid'] == last:
                 colorString = colorString + "\n\t\t\t" + "'" + row['color'] + "';\n}"
             else:
-                newLine = ("\n\t\t" + "d > " + row['cid'] + " ? " 
+                newLine = ("\n\t\t" + "d >= " + row['cid'] + " ? " 
                                "'" + row['color'] + "' :")
                 colorString = colorString + newLine
                 

@@ -143,31 +143,6 @@ int rowCount2=0;
 
         info.addTo(map);
 
-
-        // get color depending on population density value
-        function getColor(d) {
-          return d > 20 ? '#33a02c' :
-              d > 19  ? '#000' :
-              d > 18  ? '#33a02c' :
-              d > 17 ? '#1f78b4' :
-              d > 16   ? '#ffed6f' :
-              d > 15   ? '#6a3d9a' :
-              d > 14   ? '#ffffb3' :
-              d > 13  ? '#fb8072' :
-              d > 12   ? '#ff7f00' :
-              d > 11   ? '#bebada' :
-              d > 10   ? '#fdb462' :
-              d > 9   ? '#b15928' :
-              d > 8   ? '#e31a1c' :
-              d > 7   ? '#fccde5' :
-              d > 6   ? '#ccebc5' :
-              d > 5   ? '#bc80bd' :
-              d > 4   ? '#d9d9d9' :
-              d > 3   ? '#80b1d3' :
-              d > 2   ? '#b3de69' :
-                    '#8dd3c7';
-        }
-
         function style(feature) {
           return {
             weight: 2,
