@@ -70,7 +70,7 @@
 
         	info.onAdd = function (map) {
         		this._div = L.DomUtil.create('div', 'info');
-        		this.update();
+        		this.update(); 
         		return this._div;
         	};
 
@@ -79,6 +79,7 @@
         			'<b>' + feat.properties.name + '</br>' +
               'Leader: ' + feat.flname + '</br>' +
               'Delegates at play: ' + feat.delegates + '</br>' +
+              'Type of primary: ' + feat.typeprim + '</br>' +
               'Population: ' + feat.population
         			: 'Hover over a state');
         	};
