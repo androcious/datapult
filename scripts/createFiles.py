@@ -10,6 +10,7 @@ cursor = mariadb_connection.cursor()
 targetFile = "candidate_summary.tsv"
 targetFile2 = "us-states2.js"
 targetPath = "/opt/tomcat/webapps/trending2020/data/"
+targetPath2 = "/opt/tomcat/webapps/trending2020/scripts/"
 
 def create_delegate_file():
     """
@@ -71,7 +72,7 @@ def create_delegate_file():
         # Write to TSV file
         delegateLine.to_csv(targetPath+targetFile, sep='\t', encoding='utf-8', index=False)
 
-        print('--Updated ' + targetFile)
+        print('--Updated ' + targetPath+targetFile)
     
 def create_us_states_file():
     """
@@ -151,11 +152,11 @@ def create_us_states_file():
          
         myString = 'var statesData = ' + json.dumps(a)
            
-        file = open(targetPath+targetFile2, 'w')
+        file = open(targetPath2+targetFile2, 'w')
         file.write(myString)
         file.close()
 
-        print('--Updated ' + targetFile2)    
+        print('--Updated ' + targetPath2+targetFile2)    
     
 def write_all():
     create_delegate_file()
