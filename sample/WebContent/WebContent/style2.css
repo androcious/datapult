@@ -9,6 +9,46 @@
   stroke-width: 1.5px;
 }
 
+.lineon{
+  stroke: red; 
+  fill: none;
+  stroke-width: 5px;
+}
+
+.texton{
+  stroke: red; 
+  fill: none;
+  stroke-width: 1px;
+}
+
+
+div.tooltip { 
+    position: absolute;     
+    text-align: center;     
+    width: 120px;          
+    height: 18px;         
+    padding: 2px;       
+    font: 12px sans-serif;    
+    background: lightgray; 
+    border: 0px;    
+    border-radius: 8px;     
+    pointer-events: none;     
+}
+
+/* DivTable.com */
+.divTable{
+  display: table;
+  width: 100%;
+}
+.divTableRow {
+  display: table-row;
+}
+.divTableCell{
+  border: 0px;
+  display: table-cell;
+
+}
+
 
 /* Part of CSS below this point is downloaded from https://codepen.io/jackrugile/full/EyABe/ */
 strong {
@@ -19,6 +59,14 @@ em {
   font-style: italic; 
 }
 
+#hdtable {
+  width: 100%;
+  margin: left;
+  border: 0;
+  padding: 0;
+  margin-bottom: 0;
+}
+
 table {
   background: #f5f5f5;
   border-collapse: separate;
@@ -27,7 +75,7 @@ table {
   line-height: 24px;
   margin: 30px auto;
   width: 90%;
-  margin-left: 5%;
+margin-left: 5%;
   margin-right: 10%;
   text-align: center;
 } 

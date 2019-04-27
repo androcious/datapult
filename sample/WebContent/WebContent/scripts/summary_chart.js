@@ -11,7 +11,7 @@ var parseTime = d3.timeParse("%Y%m%d");
 
 var x = d3.scaleTime().range([0, width]),
     y = d3.scaleLinear().range([height, 0]),
-    z = d3.scaleOrdinal(d3.schemeCategory10);
+    color = d3.scaleOrdinal(d3.schemeCategory20);
 
 var line = d3.line()
     .curve(d3.curveBasis)
@@ -37,7 +37,7 @@ y.domain([
   d3.max(candidates, function(c) { return d3.max(c.values, function(d) { return d.delegate_count; }); })
 ]);
 
-z.domain(candidates.map(function(c) { return c.id; }));
+color.domain(candidates.map(function(c) { return c.id; }));
 
 g.append("g")
     .attr("class", "axis axis--x")
@@ -59,10 +59,31 @@ var city = g.selectAll(".city")
   .enter().append("g")
     .attr("class", "city");
 
+// Define the div for the tooltip
+var div = d3.select("body").append("div") 
+    .attr("class", "tooltip")       
+    .style("opacity", 0);
+
 city.append("path")
     .attr("class", "line")
     .attr("d", function(d) { return line(d.values); })
-    .style("stroke", function(d) { return z(d.id); });
+    .style("stroke", function(d) { return color(d.id); })
+    .on("mouseover", function(d){
+      d3.select(this).classed('lineon', true);
+      div.transition()    
+        .duration(200)    
+        .style("opacity", .9);    
+      div.html(d.id)  
+        .style("left", (d3.event.pageX) + "px")   
+        .style("top", (d3.event.pageY - 28) + "px");
+
+    })
+    .on("mouseout", function(d){
+      d3.select(this).classed('lineon', false);
+      div.transition()    
+                .duration(500)    
+                .style("opacity", 0); 
+    });
 
 city.append("text")
     .datum(function(d) { return {id: d.id, value: d.values[d.values.length - 1]}; })
