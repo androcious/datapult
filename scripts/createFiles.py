@@ -96,8 +96,8 @@ def create_us_states_file():
     # Parse and transform into list.
     state_list = []
     for tup in result:
-        state_list.append([tup[1], tup[2], tup[3], tup[4], tup[5], tup[6],
-                           tup[7], tup[8]])
+        state_list.append([tup[0], tup[1], tup[2], tup[3], tup[4], tup[5],
+                           tup[6], tup[7]])
   
     # Convert to pandas dataframes
     states = pandas.DataFrame.from_records(state_list)
@@ -109,7 +109,6 @@ def create_us_states_file():
                           'typeprim', 'delegates', 'population']
         states['id'] = states['code'].astype(str)
         states['state'] = states['state'].astype(str)
-        states['cid'] = states['cid'].astype(int)
         states['first_name'] = states['first_name'].astype(str)
         states['last_name'] = states['last_name'].astype(str)
         states['typeprim'] = states['typeprim'].astype(str)
@@ -117,15 +116,16 @@ def create_us_states_file():
         states['population'] = states['population'].astype(int)
 
         # Now I need to change the format to match what is needed
-        # Need columns as date and then name of each candidate
+        # Need name of each candidate
         states['flname'] = states[['first_name', 'last_name']].apply(
                 lambda x: ' '.join(x), axis=1)
         del states['first_name']
         del states['last_name']
+        del states['code']
         
         # Capitalize Candidate Name
-        states.columns = map(str.title, states.columns)
-                
+        states.flname = states.flname.str.title()
+    
         with open('us-states.json') as json_file:
             a = json.load(json_file)
 
@@ -148,14 +148,14 @@ def create_us_states_file():
                             c.append(temp)
         
         a['features'] = c
-        
+         
         myString = 'var statesData = ' + json.dumps(a)
-        
+           
         file = open(targetPath+targetFile2, 'w')
         file.write(myString)
         file.close()
 
-        print('--Updated ' + targetFile)    
+        print('--Updated ' + targetFile2)    
     
 def write_all():
     create_delegate_file()
