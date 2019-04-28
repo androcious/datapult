@@ -7,10 +7,13 @@ import mysql.connector as mariadb
 
 mariadb_connection = mariadb.connect(user='root', password='datapult49', database='gtep_test')
 cursor = mariadb_connection.cursor()
-targetFile = "candidate_summary.tsv"
-targetFile2 = "us-states2.js"
-targetPath = "/opt/tomcat/webapps/trending2020/data/"
-targetPath2 = "/opt/tomcat/webapps/trending2020/scripts/"
+
+candidateChartColorFile = "candidate_chart_color.js"
+candidateSummaryDataFile = "candidate_summary.tsv"
+choroplethMapDataFile = "us-states2.js"
+
+dataPath = "/opt/tomcat/webapps/trending2020/data/"
+scriptsPath = "/opt/tomcat/webapps/trending2020/scripts/"
 
 def create_delegate_file():
     """
@@ -70,9 +73,9 @@ def create_delegate_file():
         
         # After clean data i.e. remove unwanted row/col, use right header to match required format of plotting fucntion
         # Write to TSV file
-        delegateLine.to_csv(targetPath+targetFile, sep='\t', encoding='utf-8', index=False)
+        delegateLine.to_csv(dataPath+candidateSummaryDataFile, sep='\t', encoding='utf-8', index=False)
 
-        print('--Updated ' + targetPath+targetFile)
+        print('--Updated ' + dataPath+candidateSummaryDataFile)
 
 def get_candidate_colors():
     """
@@ -204,15 +207,60 @@ def create_us_states_file():
                 
         myString = 'var statesData = ' + json.dumps(a) + "\n\n" + colorString
         
-        file = open(targetPath2+targetFile2, 'w')
+        file = open(scriptsPath+choroplethMapDataFile, 'w')
         file.write(myString)
         file.close()
 
-        print('--Updated ' + targetPath2+targetFile2)    
+        print('--Updated ' + scriptsPath+choroplethMapDataFile)    
     
+def create_chart_colors_file():
+    """
+    Pulls colors from candidate tables from database
+    Returns a data frame with colors and candidate name
+    """ 
+    q_string = """
+    SELECT first_name, last_name, color 
+    FROM candidate;
+    """
+    try:
+        cursor.execute(q_string)
+        result = cursor.fetchall()
+    except:
+        print("ERROR: Could not fetch candidate color data")
+        sys.exit()
+
+    # Parse and start writing to target file
+    if not result:
+        print("No candidate found in Candidate table!")
+    else:
+        # Create/overwrite target file
+        file = open(scriptsPath+candidateChartColorFile, 'w')
+
+        # Write file header
+        file.write("function candidateColor(name) {\n")
+        file.write("\tvar color;\n")
+        file.write("\tswitch (name) {\n")
+    
+        # Write file body
+        for tup in result:
+            fullname = str(tup[0]).strip().title() + " " + str(tup[1]).strip().title()
+            #fullname = map(str.strip, fullname).title()
+            file.write("\t\tcase \"" + fullname + "\": color = " + "\"" + str(tup[2]) + "\";\n")
+            file.write("\t\tbreak;\n")
+
+        # Write file footer
+        file.write("\t\tdefault: color='red'\n")
+        file.write("\t}\n")
+        file.write("\treturn color;\n")
+        file.write("}\n")
+
+        file.close
+        print('--Updated ' + scriptsPath+candidateChartColorFile) 
+
 def write_all():
     create_delegate_file()
     create_us_states_file()
+    create_chart_colors_file()
 
 if __name__ == "__main__":
     write_all()

@@ -67,7 +67,7 @@ var div = d3.select("body").append("div")
 city.append("path")
     .attr("class", "line")
     .attr("d", function(d) { return line(d.values); })
-    .style("stroke", function(d) { return color(d.id); })
+    .style("stroke", function(d) { return candidateColor(d.id); })
     .on("mouseover", function(d){
       d3.select(this).classed('lineon', true);
       div.transition()    

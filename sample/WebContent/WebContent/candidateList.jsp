@@ -96,9 +96,10 @@ int rowCount=0;
     </div>
 
     <div class="column right2" style="text-align: left;">
-      <h3 style="text-align: center; padding-right: 30%">Queries per Candidate Over Time</h3>  
+      <h3 style="text-align: center; padding-right: 20%">Estimated Delegates Won Over Time</h3>  
       <svg width="960" height="600"></svg>
       <script src="//d3js.org/d3.v4.min.js"></script>
+      <script src="scripts/candidate_chart_color.js"></script>
       <script src="scripts/summary_chart.js"></script>
 
     </div>
