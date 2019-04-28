@@ -9,7 +9,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.datapult.util.Constants"%>
 <%@ page import="java.io.FileWriter"%>
-<title>Team Datapult</title>
+<title>Team Datapult - Country Summary</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body bgcolor=white>
@@ -68,7 +68,7 @@ String temp="";
 %>
 
 
-
+<div style="height: 500; scroll-behavior: smooth;overflow: scroll;">
 <table>
   <tr style="text-align:center; background: linear-gradient(#a3a3a3, #777777); font-weight: bold; color: #fff; font-size: 10pt">
   <%for(int h=1;h<=columnCount;h++) {
@@ -97,7 +97,7 @@ rowCount++;
   if(j<columnCount)fw.append(",");
   %>  
   <td>
-  <%=temp==null?"":temp.toUpperCase()%>
+  <%=temp==null?"":temp.substring(0, 1).toUpperCase() + temp.substring(1)%>
     </td>
   <%} 
   fw.append("\n"); 
@@ -114,8 +114,12 @@ sb.close();
 System.out.println("Successfully Created Csv file.");
 %>
     </table>
+
+</div>
+
+<br>
     
-<font color="green">Number of Rows Currently in Table: <%=rowCount %></font>
+Number of Rows Currently in Table: <%=rowCount %>
     <%
     rs.close();
     stmt.close();
@@ -131,6 +135,11 @@ catch(Exception e)
 
 %>
 </form>
+
+  <div class="footer">
+    <a href="references.html">References</a>
+    <a href="contactus.html">Contact Us</a>
+  </div>
  
 </body>
 </html>

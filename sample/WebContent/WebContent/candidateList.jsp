@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Candidate Summary</title>
+  <title>Team Datapult - Candidate Summary</title>
   <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="stylesheet" type="text/css" href="style2.css">
 </head>
