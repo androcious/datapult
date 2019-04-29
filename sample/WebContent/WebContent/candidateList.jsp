@@ -1,7 +1,9 @@
-<!DOCTYPE html>
 <html>
 
 <head>
+  <meta http-equiv="Cache-Control" content="must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>Team Datapult - Candidate Summary</title>
   <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="stylesheet" type="text/css" href="style2.css">
