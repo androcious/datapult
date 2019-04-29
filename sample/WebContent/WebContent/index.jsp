@@ -148,7 +148,7 @@
         %>
 
         <tr style="text-align: center">
-          <td id="legend_color" style="background-color:<%=rs2.getString(4)%>; opacity: 0.8">&nbsp;</td>
+          <td id="legend_color" style="background-color:<%=rs2.getString(4)==null?"#fff":rs2.getString(4)%>; opacity: 0.8">&nbsp;</td>
           <td id="firstname"><%=rs2.getString(1)==null?"":rs2.getString(1).substring(0, 1).toUpperCase() + rs2.getString(1).substring(1)%></td>
           <td id="lastname"><%=rs2.getString(2)==null?"":rs2.getString(2).substring(0, 1).toUpperCase() + rs2.getString(2).substring(1)%></td>
           <td id="delegate_count"><%=rs2.getString(3)==null?"":rs2.getString(3).substring(0, 1).toUpperCase() + rs2.getString(3).substring(1)%></td>        
