@@ -61,7 +61,7 @@
   {
     Class.forName(Constants.MARIA_DRIVER);
 
-    String query="SELECT CONCAT(first_name,' ', last_name) FROM candidate WHERE delegate_count = (SELECT MAX(delegate_count) FROM candidate)";
+    String query="SELECT CONCAT(first_name,' ', last_name), color FROM candidate WHERE delegate_count = (SELECT MAX(delegate_count) FROM candidate)";
     Connection conn=DriverManager.getConnection(Constants.DBURL,Constants.USERNAME,Constants.PWD);
     Statement stmt=conn.createStatement();
     ResultSet rs=stmt.executeQuery(query);
@@ -72,7 +72,7 @@
   <% 
   while(rs.next())
   {%>
-      <p>The Current Projected WINNER IS::  <font color = red> <%=rs.getString(1).toUpperCase()%> </font></p>
+      <p>The Current Projected WINNER IS::  <font color=<%=rs.getString(2).toUpperCase()%>> <%=rs.getString(1).toUpperCase()%> </font></p>
    <% } %> 
 
   </h1>
