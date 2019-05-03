@@ -244,8 +244,11 @@ def create_chart_colors_file():
         # Write file body
         for tup in result:
             fullname = str(tup[0]).strip().title() + " " + str(tup[1]).strip().title()
-            #fullname = map(str.strip, fullname).title()
-            file.write("\t\tcase \"" + fullname + "\": color = " + "\"" + str(tup[2]) + "\";\n")
+            if tup[2] is None:
+                cColor = "#fff"
+            else:
+                cColor = str(tup[2])
+            file.write("\t\tcase \"" + fullname + "\": color = " + "\"" + cColor + "\";\n")
             file.write("\t\tbreak;\n")
 
         # Write file footer
