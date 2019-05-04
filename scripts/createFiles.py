@@ -5,7 +5,7 @@ from copy import deepcopy
 
 import mysql.connector as mariadb
 
-mariadb_connection = mariadb.connect(user='root', password='datapult49', database='gtep_test')
+mariadb_connection = mariadb.connect(user='root', password='datapult49', database='gtep')
 cursor = mariadb_connection.cursor()
 
 candidateChartColorFile = "candidate_chart_color.js"

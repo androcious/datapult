@@ -10,7 +10,7 @@ import pytrends.request as requests
 from pytrends.request import TrendReq
 pytrends = TrendReq(hl='en-US', tz=360)
 
-mariadb_connection = mariadb.connect(user='root', password='datapult49', database='gtep_test')
+mariadb_connection = mariadb.connect(user='root', password='datapult49', database='gtep')
 cursor = mariadb_connection.cursor()
 
 

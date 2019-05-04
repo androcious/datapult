@@ -14,7 +14,7 @@ def get_query(date):
     """
     q_string = """
 	SELECT cid, state_code, sum(amount), qdate
-    FROM query_dup
+    FROM query
     WHERE qdate = '{}'
     GROUP BY cid, state_code, qdate;
     """.format(date)
@@ -334,7 +334,7 @@ def update_all():
     # Determine date range to use from query table in database
     q_string = """
     SELECT max(qdate), min(qdate)
-    FROM query_dup;
+    FROM query;
     """
     try:
         cursor.execute(q_string)

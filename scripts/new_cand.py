@@ -6,7 +6,7 @@ import fill as fill_pipeline
 import calc
 
 conn = mariadb.connect(user='root', password='datapult49', database='gtep')
-cursor = conn.cursor()
+cursor = conn.cursor(prepared=True)
 
 def insert_cand(cname):
     # insert candidate into candidate table
@@ -19,8 +19,12 @@ def insert_cand(cname):
         INSERT INTO candidate
         (cid, first_name, middle_name, last_name, delegate_count, nickname, img, color)
         VALUES
-        (NULL, "{}", NULL, "{}", 0, NULL, NULL, NULL);
-    """.format(cname[0], cname[1])
+        (NULL, %s, NULL, %s, 0, NULL, NULL, NULL);
+    """
+    fname = cname[0]
+    lname = cname[1]
+    input = (fname, lname)
+    cursor.execute(q_string, input)
 
     print("Executing...\n{}".format(q_string))
     try:
