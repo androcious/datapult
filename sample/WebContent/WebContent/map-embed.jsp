@@ -1,7 +1,12 @@
     <html> 
         <head>
 <!-- Plotly.js -->
+        <script src="https://d3js.org/d3.v4.min.js"></script>
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+        <link rel="stylesheet" href="style.css"/>
+        <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+
         <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.DriverManager" %>
 <%@ page import="java.sql.ResultSet" %>
@@ -103,55 +108,96 @@ int rowCount2=0;
         <div id="myDiv" ></div>
         
         
-        <script>
-     
-        	
-    
-        		
-        	
-        	Plotly.d3.csv("WINNER.csv", function(err, rows){
-       
-        	function unpack(rows, key) {
-                return rows.map(function(row) { return row[key]; });
-            }
-        
-       var data = [{
-                    type: 'choropleth',
-                    locationmode: 'USA-states',
-                    locations: unpack(rows, 'code'),
-                    z: unpack(rows, 'delegates'),
-                    text: unpack(rows, 'flname'),
-                    zmin: 0,
-                    zmax: 100,
-                    colorscale: [
-                      [0, 'rgb(242,240,247)'], [0.2, 'rgb(218,218,235)'],
-                      [0.4, 'rgb(188,189,220)'], [0.6, 'rgb(158,154,200)'],
-                      [0.8, 'rgb(117,107,177)'], [1, 'rgb(84,39,143)']
-                    ],
-                  colorbar: {
-                    title: 'Delegates',
-                    thickness: 10
-                  },
-                  marker: {
-                    line:{
-                      color: 'rgb(255,255,255)',
-                      width: 5
-                    }
-                  }
-                }];
+      <script type="text/javascript" src="scripts/us-states2.js"></script>
 
-      console.log(data.locations);
-        var layout = {
-                title: '2019 Democratic Primary leaders by state',
-                geo:{
-                  scope: 'usa',
-                  showlakes: true,
-                  lakecolor: 'rgb(100,255,255)'
-                }
-            };
-            Plotly.plot(myDiv, data, layout, {showLink: true});
-        });
-        </script>
+      <script type="text/javascript">
+
+        var map = L.map('myDiv').setView([37.8, -96], 4);
+
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+          maxZoom: 18,
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> ' +
+            'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          id: 'mapbox.light'
+        }).addTo(map);
+
+
+        // control that shows state info on hover
+        var info = L.control();
+
+        info.onAdd = function (map) {
+          this._div = L.DomUtil.create('div', 'info');
+          this.update(); 
+          return this._div;
+        };
+
+        info.update = function (feat) {
+          this._div.innerHTML = (feat ?
+            '<b>' + feat.properties.name + '</br>' +
+            'Leader: ' + feat.flname + '</br>' +
+            'Delegates at play: ' + feat.delegates + '</br>' +
+            'Type of primary: ' + feat.typeprim + '</br>' +
+            'Population: ' + feat.population
+            : 'Hover over a state');
+        };
+
+        info.addTo(map);
+
+        function style(feature) {
+          return {
+            weight: 2,
+            opacity: 1,
+            color: 'white',
+            dashArray: '3',
+            fillOpacity: 0.7,
+            fillColor: getColor(feature.cid)
+          };
+        }
+
+        function highlightFeature(e) {
+          var layer = e.target;
+
+          layer.setStyle({
+            weight: 5,
+            color: '#666',
+            dashArray: '',
+            fillOpacity: 0.7
+          });
+
+          if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+            layer.bringToFront();
+          }
+
+          info.update(layer.feature);
+        }
+
+        var geojson;
+
+        function resetHighlight(e) {
+          geojson.resetStyle(e.target);
+          info.update();
+        }
+
+        function zoomToFeature(e) {
+          map.fitBounds(e.target.getBounds());
+        }
+
+        function onEachFeature(feature, layer) {
+          layer.on({
+            mouseover: highlightFeature,
+            mouseout: resetHighlight,
+            click: zoomToFeature
+          });
+        }
+
+        geojson = L.geoJson(statesData, {
+          style: style,
+          onEachFeature: onEachFeature
+        }).addTo(map);
+
+      </script>
+
+        
         <table border="0">
 <tr bgcolor="cyan">
   <%for(int h=1;h<columnCount2;h++) {%>  

@@ -1,0 +1,27 @@
+4.0 Color Scales - Ordinal
+https://bl.ocks.org/pstuffa/3393ff2711a53975040077b7453781a9
+schemeCategory20
+
+cid name hex color
+Pete Buttigieg #1F77B4 dark blue
+Tulsi Gabbard #AEC7E8 light blue
+Bernie Sanders #FF7F0E dark orange
+Marianne Williamson #FFBB78 light orange
+Elizabeth Warren #2CA02C dark green
+Amy Klobuchar #98DF8A light green
+Andrew Yang #D62728 dark red
+Kirsten Gillibrand #FF9896 light red
+Joe Biden #9467BD dark purple
+Jay Inslee #C5B0D5 light purple
+Kamala Harris #8C564B dark brown
+Julian Castro #C49C94 light brown
+Cory Booker #E377C2 dark pink
+Beto O'rourke #F7B6D2 light pink
+ #7F7F7F dark grey
+ #C7C7C7 light grey
+John Delaney #BCBD22 dark puke green
+ #DBDB8D light puke green
+John Hickenlooper #17BECF dark baby blue
+ #9EDAE5 light baby blue
+
+

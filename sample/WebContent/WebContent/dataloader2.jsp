@@ -9,38 +9,37 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.datapult.util.Constants"%>
 <%@ page import="java.io.FileWriter"%>
-<title>Team Datapult</title>
+<title>Team Datapult - Country Summary</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body bgcolor=white>
 
-<table border="0">
-<tr>
-<td>
-<img src="images/democrat.jpg" height=200 width = 300>
-</td>
-<td>
-<h1>2020 Democratic Primary Trends Predictor </h1>
-<p>This Project is brought to you by team Datapult
-</td>
 
+  <table border="0" >
+    <tr>
+      <td>
+        <img src="images/democrat.jpg" height=100 width = 150>
+      </td>
+      <td>
+        <h1>2020 Democratic Primary Trends Predictor </h1>
+        <p>This Project is brought to you by team Datapult
+      </td>
+        <td>&nbsp;&nbsp;</td>
+        <td><img src="images/DemocratRun2020.png" height="100" width="300"></td>
+    </tr>
+    <tr></tr>
+  </table>
 
-
-</tr>
-
-<tr></tr>
-</table>
 <div class="topnav">
   <a href="index.jsp">Home</a>
   <a href="howto.html">How To</a>
   <a href="inspiration.html">Inspiration</a>
   <a href="candidateList.jsp">Candidate Summary</a>
   <a href="dataloader2.jsp">Country Summary</a>
-  <a href="investigate.html">Investigate</a>
 </div>
 <br>
-<font color="red">
-<%= new String("Hello! The Current Status in the US according to trends observed by Google searches/trends is....") %>
+<font>
+<%= new String("<b>Hello!</b> The Current Status in the US according to trends observed by Google searches/trends is....") %>
 
 </font>
 <br><br>
@@ -60,7 +59,7 @@ ResultSetMetaData rsmd = rs.getMetaData();
 int columnCount = rsmd.getColumnCount();
 int rowCount=0;
 
-String saveFile="/Users/sairao/take2/sample/WebContent/WINNER.csv";
+String saveFile="..\\WebContent\\WINNER.csv";
 
 FileWriter sb = new FileWriter(saveFile);
 StringBuilder fw = new StringBuilder();
@@ -69,19 +68,19 @@ String temp="";
 %>
 
 
-
-<table border="2">
-<tr bgcolor="cyan">
+<div style="height: 500; scroll-behavior: smooth;overflow: scroll;">
+<table>
+  <tr style="text-align:center; background: linear-gradient(#a3a3a3, #777777); font-weight: bold; color: #fff; font-size: 10pt">
   <%for(int h=1;h<=columnCount;h++) {
   
   fw.append(rsmd.getColumnLabel(h).toLowerCase());
   if(h<columnCount)fw.append(",");
   %>  
-    <td><b> <font color="blue"><%=rsmd.getColumnLabel(h).toUpperCase()%></font></b></td>
+    <td><%=rsmd.getColumnLabel(h)==null?"":rsmd.getColumnLabel(h).substring(0, 1).toUpperCase() + rsmd.getColumnLabel(h).substring(1)%></td>
   <%} 
   fw.append("\n");%>
 
-</tr>
+  </tr>
 <% 
 while(rs.next())
 {
@@ -91,14 +90,14 @@ rowCount++;
 %>
 
 
-    <tr>
+    <tr style="text-align: center">
   <%for(int j=1;j<=columnCount;j++) {
   temp=rs.getString(j);
   fw.append(temp);
   if(j<columnCount)fw.append(",");
   %>  
   <td>
-  <%=temp==null?"":temp.toUpperCase()%>
+  <%=temp==null?"":temp.substring(0, 1).toUpperCase() + temp.substring(1)%>
     </td>
   <%} 
   fw.append("\n"); 
@@ -115,8 +114,12 @@ sb.close();
 System.out.println("Successfully Created Csv file.");
 %>
     </table>
+
+</div>
+
+<br>
     
-<font color="green">Number of Rows Currently in Table: <%=rowCount %></font>
+Number of Rows Currently in Table: <%=rowCount %>
     <%
     rs.close();
     stmt.close();
@@ -132,6 +135,11 @@ catch(Exception e)
 
 %>
 </form>
+
+  <div class="footer">
+    <a href="references.html">References</a>
+    <a href="contactus.html">Contact Us</a>
+  </div>
  
 </body>
 </html>

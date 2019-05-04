@@ -51,11 +51,15 @@ body {
 
 /* Left and right column */
 .column.left {
-  width: 15%;
+  width: 25%;
 }
 
-.column.left2 {
-  width: 40%;
+tr-header{
+  text-align:center; 
+  background: linear-gradient(#a3a3a3, #777777); 
+  font-weight: bold; 
+  color: #fff; 
+  font-size: 10pt;
 }
 
 label {
@@ -64,7 +68,7 @@ label {
 
 /* Middle column */
 .column.right {
-  width: 85%;
+  width: 75%;
   text-align: center;
 }
 
@@ -131,4 +135,9 @@ label {
     float: none;
     width: 100%;
   }
+}
+
+#myDiv {
+  width: 800px;
+  height: 500px;
 }
