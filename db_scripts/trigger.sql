@@ -19,3 +19,9 @@ BEGIN
   VALUES (OLD.cid, OLD.first_name, OLD.last_name, OLD.delegate_count);
 END; //
 DELIMITER ;
+
+
+INSERT INTO gtep.candidate_audit (a_cid, a_first_name, a_last_name, a_delegate_count)
+  SELECT gtep_test.candidate_audit.a_cid, gtep_test.candidate_audit.a_first_name, 
+    gtep_test.candidate_audit.a_last_name, gtep_test.candidate_audit.a_delegate_count
+  FROM gtep_test.candidate_audit;
