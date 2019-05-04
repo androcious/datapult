@@ -1,9 +1,11 @@
 import sys
+from time import sleep
 import datetime
 import mysql.connector as mariadb
 import fill as fill_pipeline
+import calc
 
-conn = mariadb.connect(user='root', password='datapult49', database='gtep_test')
+conn = mariadb.connect(user='root', password='datapult49', database='gtep')
 cursor = conn.cursor()
 
 def insert_cand(cname):
@@ -61,8 +63,14 @@ if __name__ == "__main__":
         sys.exit(1)
 
     insert_cand(cname)
-    if not check_daily_pull():
-        fill_pipeline.fill("today")
-
     conn.commit()
     print("Candidate table successfully updated.")
+    sleep(5)
+    if not check_daily_pull():
+        sleep(5)
+        fill_pipeline.fill("today")
+        sleep(5)
+        print("Finished updating query table. Updating all other tables accordingly.")
+        calc.update_all()
+
+

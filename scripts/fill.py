@@ -9,7 +9,7 @@ import query_help as qry
 import mysql.connector as mariadb
 from trends import REQUESTS
 
-mariadb_connection = mariadb.connect(user='root', password='datapult49', database='gtep_test')
+mariadb_connection = mariadb.connect(user='root', password='datapult49', database='gtep')
 cursor = mariadb_connection.cursor()
 
 today = datetime.datetime.today()
