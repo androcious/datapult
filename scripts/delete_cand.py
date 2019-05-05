@@ -2,8 +2,8 @@ import sys
 import calc
 import mysql.connector as mariadb
 
-conn = mariadb.connect(user='root', password='datapult49', database='gtep')
-cursor = conn.cursor()
+conn = mariadb.connect(user='root', password='datapult49', database='gtep', use_pure=True)
+cursor = conn.cursor(prepared=True)
 
 def delete_cand(cname):
     # insert candidate into candidate table
@@ -12,27 +12,41 @@ def delete_cand(cname):
         print("Error: candidate name must be <first> <last>")
         sys.exit(1)
 
+    # delete from summary table
+    q_string = """
+        DELETE FROM summary
+        WHERE first_name = %s AND last_name = %s
+    """
+    input = (cname[0], cname[1])
+
+    try:
+        cursor.execute(q_string, input)
+    except Exception as e:
+        print("Error deleting from candidate table: {}".format(e))
+        sys.exit(1)
     # delete from candidate table
     q_string = """
         DELETE FROM candidate
-        WHERE first_name = "{}" AND last_name = "{}"
-    """.format(cname[0], cname[1])
+        WHERE first_name = %s AND last_name = %s
+    """
+    input = (cname[0], cname[1])
 
-    print("Executing...\n{}".format(q_string))
     try:
-        cursor.execute(q_string)
+        cursor.execute(q_string, input)
     except Exception as e:
         print("Error deleting from candidate table: {}".format(e))
         sys.exit(1)
 
     q_string = """
-        DELETE FROM query_dup
-        WHERE phrase LIKE "{} {}"
-    """.format(cname[0], cname[1])
+        DELETE FROM query
+        WHERE phrase LIKE %s
+    """
+    
+    input = (cname[0], cname[1])
 
     print("Executing...\n{}".format(q_string))
     try:
-        cursor.execute(q_string)
+        cursor.execute(q_string, input)
     except Exception as e:
         print("Error deleting from query table: {}".format(e))
         sys.exit(1)
