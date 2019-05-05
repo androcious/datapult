@@ -23,5 +23,6 @@ John Delaney #BCBD22 dark puke green
 Seth Moulton #DBDB8D light puke green
 John Hickenlooper #17BECF dark baby blue
 Michael Bennet #9EDAE5 light baby blue
+ #000000 black
 
 
