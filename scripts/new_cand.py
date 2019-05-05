@@ -5,7 +5,7 @@ import mysql.connector as mariadb
 import fill as fill_pipeline
 import calc
 
-conn = mariadb.connect(user='root', password='datapult49', database='gtep')
+conn = mariadb.connect(user='root', password='datapult49', database='gtep', use_pure=True)
 cursor = conn.cursor(prepared=True)
 
 def insert_cand(cname):
@@ -19,7 +19,7 @@ def insert_cand(cname):
         INSERT INTO candidate
         (cid, first_name, middle_name, last_name, delegate_count, nickname, img, color)
         VALUES
-        (NULL, %s, NULL, %s, 0, NULL, NULL, NULL);
+        (NULL, %s, NULL, %s, 0, NULL, NULL, "#000000");
     """
     fname = cname[0]
     lname = cname[1]
@@ -70,11 +70,9 @@ if __name__ == "__main__":
     conn.commit()
     print("Candidate table successfully updated.")
     sleep(5)
-    if not check_daily_pull():
-        sleep(15)
-        fill_pipeline.fill("today")
-        sleep(5)
-        print("Finished updating query table. Updating all other tables accordingly.")
-        calc.update_all()
+    fill_pipeline.fill("today")
+    sleep(5)
+    print("Finished updating query table. Updating all other tables accordingly.")
+    calc.update_all()
 
 

@@ -16,7 +16,7 @@ today = datetime.datetime.today()
 
 def insert_data(cand, score, cid, state, date):
     q_string = """
-        INSERT INTO query_dup
+        INSERT INTO query
         (qid, phrase, cid, state_code, amount, qdate)
         VALUES
         (NULL, "{}", {}, "{}", {}, "{}");
