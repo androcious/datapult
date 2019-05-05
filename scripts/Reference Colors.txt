@@ -20,8 +20,9 @@ Beto O'rourke #F7B6D2 light pink
  #7F7F7F dark grey
  #C7C7C7 light grey
 John Delaney #BCBD22 dark puke green
- #DBDB8D light puke green
+Seth Moulton #DBDB8D light puke green
 John Hickenlooper #17BECF dark baby blue
- #9EDAE5 light baby blue
+Michael Bennet #9EDAE5 light baby blue
+ #000000 black
 
 
