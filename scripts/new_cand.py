@@ -71,7 +71,7 @@ if __name__ == "__main__":
     print("Candidate table successfully updated.")
     sleep(5)
     if not check_daily_pull():
-        sleep(5)
+        sleep(15)
         fill_pipeline.fill("today")
         sleep(5)
         print("Finished updating query table. Updating all other tables accordingly.")
